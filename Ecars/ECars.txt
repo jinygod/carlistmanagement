@@ -1,0 +1,77 @@
+[EBooks.txt]
+
+
+title = var
+테이블명 : ECAR
+번호 : EC_SERIAL, 숫자, PRIMARY KEY, AUTO INCREMENT, NOT NULL
+차종 : EC_VAR,  문자열(50자리)
+색상 : EC_COLOR, 문자열(50자리)
+가격 : EC_PRICE,  숫자
+수량 : EC_QTY,    숫자
+
+CREATE TABLE ECAR
+(
+	EC_SERIAL NUMBER(5) PRIMARY KEY,
+	EC_VAR  VARCHAR2(50),
+	EC_COLOR VARCHAR2(50),
+	EC_PRICE  NUMBER(10),
+	EC_QTY    NUMBER(10)
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE ECAR_SEQUENCE
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 99999
+    MINVALUE 1
+    NOCYCLE
+    NOCACHE;
+    
+-- 시퀀스 생성
+CREATE SEQUENCE EBOOK_SEQUENCE
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 99999
+    MINVALUE 1
+    CYCLE
+    CACHE 2;
+
+-- 시퀀스(sequence)
+-- 순번: 연속적으로 발행되는 일련번호
+/*
+CREATE SEQUENCE 시퀀스이름
+  INCREMENT BY n      -- 증가값(기본값 1)
+  START WITH n        -- 시작값(기본값 1)
+  MAXVALUE n          -- 최대값
+  MINVALUE n          -- 최소값
+  CYCLE | NOCYCLE     -- 최대값에 도달했을 때 시작값에서 다시 시작할 것인지 유무
+  CACHE n | NOCACHE   -- 생성할 번호를 메모리에 미리 할당해 놓은 수를 지정할지 유무(기본값은 20)
+*/
+
+
+
+-- 시퀀스 수정
+-- START WITH는 수정할 수 없다.
+ALTER SEQUENCE dept_sequence
+    INCREMENT BY 1
+    -- START WITH 10
+    MAXVALUE 99
+    MINVALUE 0
+    NOCYCLE
+    CACHE 2;
+
+-- 시퀀스 삭제    
+DROP SEQUENCE EBOOK_SEQUENCE;
+
+SELECT * FROM EBOOK_SEQUENCE;    
+
+-- 다음번호 발행
+SELECT EBOOK_SEQUENCE.nextval FROM dual;
+
+-- 발행된 현재 번호 조회
+SELECT EBOOK_SEQUENCE.currval FROM dual;
+
+
+INSERT INTO EBOOK (EB_SERIAL, EB_TITLE) VALUES(EBOOK_SEQUENCE.nextval, '전자책');
+SELECT * FROM EBOOK;
+	
